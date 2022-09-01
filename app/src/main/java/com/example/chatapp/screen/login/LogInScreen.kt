@@ -1,6 +1,5 @@
 package com.example.chatapp.screen.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -22,7 +21,6 @@ import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.chatapp.R
 import com.example.chatapp.ui.theme.ChatAppTheme
@@ -77,6 +75,7 @@ class LogIn : ComponentActivity() {
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(top = 64.dp)
                     ) {
+                       //log in as an user button
                         Button(onClick = {
                             viewModel.loginUser(userName.text, getString(R.string.jwt_token))
                         }, shape = RoundedCornerShape(20)
@@ -87,6 +86,7 @@ class LogIn : ComponentActivity() {
                             Text(text = "User",
                                 fontSize = MaterialTheme.typography.h6.fontSize)
                         }
+                        //log in as a guest button
                         Button(onClick = {
                             viewModel.loginUser(userName.text)
                         }, shape = RoundedCornerShape(20)
@@ -159,25 +159,6 @@ class LogIn : ComponentActivity() {
             modifier = Modifier.padding(bottom = 56.dp)
         )
     }
-
-    @Composable
-    fun SetUserName(){
-
-
-    }
-
-    @Composable
-    fun GoBttn(){
-
-    }
-
-    @Composable
-    fun GuestBttn(){
-
-    }
-
-
-
 }
 
 @Preview(showBackground = true)
