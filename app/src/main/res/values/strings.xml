@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ChatApp</string>
+
+    <string name="api_key">3q87wwd2duqs</string>
+    <string name="jwt_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoicGFzc2FudC1oYXRlbSJ9.swNz_akcUI1uHXQzm-9pwWMawQlSctpXQpxOYMfCvyU</string>
+<!--passant-hatem -->
 </resources>
