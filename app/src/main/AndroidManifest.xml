@@ -25,9 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".screen.channel.ChannelList" />
-
+        <activity
+            android:name=".screen.channels_list.ChannelList"
+            />
+        <activity
+            android:name=".screen.chat.Chat"
+            android:windowSoftInputMode="adjustResize"
+            />
     </application>
 
 </manifest>

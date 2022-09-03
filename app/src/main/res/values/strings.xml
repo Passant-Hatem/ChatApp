@@ -4,5 +4,6 @@
     <string name="api_key">3q87wwd2duqs</string>
     <string name="jwt_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoicGFzc2FudC1oYXRlbSJ9.swNz_akcUI1uHXQzm-9pwWMawQlSctpXQpxOYMfCvyU</string>
     <string name="title_activity_channel_list">ChannelList</string>
+    <string name="title_activity_chat">Chat</string>
     <!--passant-hatem -->
 </resources>
