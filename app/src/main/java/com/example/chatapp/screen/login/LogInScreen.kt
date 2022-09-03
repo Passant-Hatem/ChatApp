@@ -1,5 +1,6 @@
 package com.example.chatapp.screen.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.example.chatapp.R
+import com.example.chatapp.screen.channel.ChannelList
 import com.example.chatapp.ui.theme.ChatAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,6 +60,8 @@ class LogIn : ComponentActivity() {
 
                     is LoginViewModel.LogInEvent.Success -> {
                         showToast("Login Successful!")
+                        startActivity(Intent(this@LogIn, ChannelList::class.java))
+                        finish()
                     }
                 }
             }
