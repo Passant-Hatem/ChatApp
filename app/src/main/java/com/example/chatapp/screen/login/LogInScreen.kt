@@ -8,15 +8,20 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.withStyle
@@ -73,6 +78,7 @@ class LogIn : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
@@ -103,6 +109,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center
     ){
         AppName()
+        val keyboardController = LocalSoftwareKeyboardController.current
         OutlinedTextField(
             value = userName,
             onValueChange = { userName = it },
@@ -110,7 +117,14 @@ fun LoginScreen(
             leadingIcon = {
                 Icon(imageVector = Icons.Filled.Person,
                     contentDescription = "User Name")
-            }
+            },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+            keyboardActions = KeyboardActions(onSend = {
+                viewModel.loginUser(userName.text,
+                    getActivity.getString(R.string.jwt_token)
+                )
+                keyboardController?.hide()
+            })
         )
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
