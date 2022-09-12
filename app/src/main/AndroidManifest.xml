@@ -17,8 +17,8 @@
         <activity
             android:name=".screen.login.LogIn"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.ChatApp">
+            android:theme="@style/Theme.ChatApp"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +30,10 @@
             />
         <activity
             android:name=".screen.chat.Chat"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity
+            android:name=".screen.signup.SignUp"
             android:windowSoftInputMode="adjustResize"
             />
     </application>
