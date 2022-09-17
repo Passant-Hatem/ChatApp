@@ -67,7 +67,6 @@ class ChannelList : ComponentActivity() {
                                  ),
                              ),
                              onItemClick = {
-                                 //TODO log out action ,drawer color
                                  if(it.id == "log_out") {
                                      viewModel.logout()
                                      finish()
@@ -106,7 +105,6 @@ class ChannelList : ComponentActivity() {
                                  showDialog = true
                              },
                              onHeaderAvatarClick = {
-                                 //TODO
                                  scope.launch {
                                      scaffoldState.drawerState.open()
                                  }
