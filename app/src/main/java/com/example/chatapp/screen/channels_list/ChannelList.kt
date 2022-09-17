@@ -1,5 +1,6 @@
 package com.example.chatapp.screen.channels_list
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -10,15 +11,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.example.chatapp.screen.chat.Chat
+import com.example.chatapp.screen.login.LogIn
 import dagger.hilt.android.AndroidEntryPoint
 import io.getstream.chat.android.client.models.Filters
 import io.getstream.chat.android.compose.ui.channels.ChannelsScreen
 import io.getstream.chat.android.compose.ui.theme.ChatTheme
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ChannelList : ComponentActivity() {
@@ -29,45 +36,86 @@ class ChannelList : ComponentActivity() {
             subscribeToEvents()
 
             setContent {
+
              ChatTheme{
-
-                 var showDialog: Boolean by remember {
-                     mutableStateOf(false)
-                 }
-
-                 if(showDialog){
-                     CreateChannelDialog(
-                         dismiss = { name ->
-                          viewModel.createChannel(name)
-                          showDialog = false
-                      }
-                     )
-                 }
-
-                 ChannelsScreen(
-                     filters = Filters.`in`(
-                         fieldName = "type",
-                         values = listOf(
-                             "gaming", "messaging", "commerce", "team" ,"livestream"
+                 val scaffoldState = rememberScaffoldState()
+                 val scope = rememberCoroutineScope()
+                 Scaffold(
+                     scaffoldState = scaffoldState,
+                     drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+                     drawerContent = {
+                         viewModel.getCurrentUser()?.let { DrawerHeader(user = it) }
+                         DrawerBody(
+                             items = listOf(
+                                 MenuItem(
+                                     id = "settings",
+                                     title = "Settings",
+                                     contentDescription = "Go to settings screen",
+                                     icon = Icons.Default.Settings
+                                 ),
+                                 MenuItem(
+                                     id = "help",
+                                     title = "Help",
+                                     contentDescription = "Get help",
+                                     icon = Icons.Default.Info
+                                 ),
+                                 MenuItem(
+                                     id = "log_out",
+                                     title = "Log out",
+                                     contentDescription = "Logging out",
+                                     icon = Icons.Default.ArrowBack
+                                 ),
+                             ),
+                             onItemClick = {
+                                 //TODO log out action ,drawer color
+                                 if(it.id == "log_out") {
+                                     viewModel.logout()
+                                     finish()
+                                     startActivity(Intent(applicationContext, LogIn::class.java))
+                                 }
+                             }
                          )
-                     ),
-                     title = "Channels",
-                     isShowingSearch = true,
-                     onItemClick = {
-                         startActivity(Chat.getIntent(this, channelId = it.cid))
-                     },
-                     onBackPressed = {finish()},
-                     onHeaderActionClick = {
-                          showDialog = true
-                     },
-                     onHeaderAvatarClick = {
-                         //TODO
-                         showToast("Avatar Clicked")
                      }
-                 )
+                 ){
+                         var showDialog: Boolean by remember {
+                             mutableStateOf(false)
+                         }
+
+                         if(showDialog){
+                             CreateChannelDialog(
+                                 dismiss = { name ->
+                                     viewModel.createChannel(name)
+                                     showDialog = false
+                                 }
+                             )
+                         }
+                         ChannelsScreen(
+                             filters = Filters.`in`(
+                                 fieldName = "type",
+                                 values = listOf(
+                                     "gaming", "messaging", "commerce", "team" ,"livestream"
+                                 )
+                             ),
+                             title = "Channels",
+                             isShowingSearch = true,
+                             onItemClick = {
+                                 startActivity(Chat.getIntent(this, channelId = it.cid))
+                             },
+                             onBackPressed = {finish()},
+                             onHeaderActionClick = {
+                                 showDialog = true
+                             },
+                             onHeaderAvatarClick = {
+                                 //TODO
+                                 scope.launch {
+                                     scaffoldState.drawerState.open()
+                                 }
+                             }
+                         )
+                     }
+                 }
              }
         }
-    }
 
     @Composable
     private fun CreateChannelDialog(dismiss: (String) -> Unit) {

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.models.User
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -60,5 +61,13 @@ class ChannelListViewModel @Inject constructor(
     sealed class CreateChannelEvents{
         data class Error(val error: String) : CreateChannelEvents()
         object Success : CreateChannelEvents()
+    }
+
+    fun getCurrentUser(): User? {
+        return client.getCurrentUser()
+    }
+
+    fun logout() {
+        client.disconnect()
     }
 }

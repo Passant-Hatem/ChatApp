@@ -248,6 +248,6 @@ fun ForgetPassword(){
         modifier = Modifier.padding(start = 167.dp),
         style = TextStyle(Color.Blue , textDecoration = TextDecoration.Underline),
         onClick = {
-            Log.e("signup" ,"forgot pass")
+            Log.e("log in" ,"forgot pass")
         })
 }
