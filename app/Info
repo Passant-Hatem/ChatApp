@@ -1,8 +1,0 @@
-Authenticate users and create sign up screen
-
-check for internet connection and set time if it's take too long
-------------------------------------
-stream chat sdk
-jetpack compose
-MVVM design pattern
-dependency injection dagger-hilt
